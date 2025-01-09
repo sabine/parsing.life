@@ -1,7 +1,8 @@
 # Parsing.Life Website
 
+OCaml needs to be installed (e.g. https://ocaml.org/install).
 
-First, set up the opam switch needed to build and run this:
+Set up the opam switch needed to build and run this:
 ```
 make deps
 ```
