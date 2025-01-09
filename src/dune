@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (public_name main)
+ (modules main)
+ (libraries bos cmarkit ptime fmt data templates))

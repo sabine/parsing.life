@@ -1,0 +1,78 @@
+open JSX
+
+let navigation_link ~href ~title =
+  <a class_="px-6 py-3 h-full items-center hover:text-primary_dark" href=(href)>(string title)</a>
+
+let navigation_button ~href ~title =
+  <a class_="inline-flex font-montserrat text-white bg-primary_light px-8 py-4" href=(href)>(string title)</a>
+
+let navigation children =
+  <nav class_="bg-[#1A202C] overflow-hiddne max-w-screen text-white">
+    <div class_="md:container flex flex-col gap-2 items-start mx-auto py-2 lg:py-0 px-6 md:flex-row md:items-center">
+      (* <a class_="px-2 pt-3 hidden md:inline" href="/"><img src="/img/fun-ocaml-logo.svg"/></a> *)
+      (list children)
+    </div>
+  </nav>
+
+let top_navigation =
+  navigation [
+      navigation_link ~href:"/" ~title:"Home";
+  ]
+
+let email_link ~id ~user host =
+  list [
+    <a id=(id)></a>;
+    <script>
+  (Format.sprintf {|
+  (function (){
+    let user = "%s";
+    let host = "%s";
+    let elink = document.getElementById("%s");
+    elink.href = `mailto:${user}@${host}`;
+    elink.innerHTML = `${user}@${host}`;
+  })()
+  |} user host id |> unsafe)
+    </script>
+  ]
+
+let meta_title = "Parsing Life - a Blog"
+let meta_description = "This is my blog where I write about things OCaml and programming"
+let meta_image = "https://parsing.life/social-media/social-media-image.png?1"
+
+let make ~title ~children () =
+  <html lang="en">
+    <head>
+      <meta charset="utf-8"/>
+      <title>(string title)</title>
+      <link rel="stylesheet" href="/css/main.css"/>
+      <link rel="stylesheet" href="font-files/inter.css"/>
+      <link rel="stylesheet" href="font-files/Montserrat.css"/>
+
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+      <link rel="icon" type_="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+      <link rel="icon" type_="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+      <link rel="manifest" href="/site.webmanifest"/>
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"/>
+      <meta name="msapplication-TileColor" content="#da532c"/>
+      <meta name="theme-color" content="#ffffff"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <meta property="og:title" content=(meta_title)/>
+      <meta property="og:description" content=(meta_description)/>
+      <meta property="og:image" content=(meta_image)/>
+      <meta property="og:site_name" content="Parsing Life - a Blog"/>
+      <meta property="og:url" content="https://parsing.life"/>
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:title" content=(meta_title)/>
+      <meta name="twitter:description" content=(meta_description)/>
+      <meta name="twitter:image" content=(meta_image)/>
+      <meta name="twitter:site" content="@sabine_s_"/>
+    </head>
+    <body>
+      (list children)
+      (navigation [
+        navigation_link ~href:"/" ~title:"Home";
+        navigation_link ~href:"/privacy" ~title:"Privacy Policy"
+      ])
+    </body>
+  </html>

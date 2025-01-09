@@ -1,0 +1,6 @@
+- title: Test post
+  slug: test-post
+  date_published: 2025-01-02
+  image_src: img/test.png
+  content: |
+      Hello world

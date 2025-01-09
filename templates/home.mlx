@@ -1,0 +1,21 @@
+open JSX
+
+let render_posts ~(posts : Data.Post.t list) =
+  let post_els = posts |> List.map (fun (post: Data.Post.t) ->
+    <a href=("/posts/" ^ post.slug)><h2 class_="text-lg font-bold hover:underline">(post.title |> string)</h2></a>
+  )
+  in
+  <div class_="container mx-auto px-12 py-12">
+    <h1 class_="text-3xl mb-8 font-bold">"Parsing Life - a Blog about Programming and OCaml"</h1>
+    <div class_="flex flex-col gap-6">
+    (post_els |> list)
+    </div>
+  </div>
+
+let make ~(posts : Data.Post.t list) () =
+  <Layout title=("Parsing Life")>
+    ([
+     Layout.top_navigation;
+     render_posts ~posts;
+    ])
+  </Layout>
