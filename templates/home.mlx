@@ -1,13 +1,37 @@
 open JSX
 
+let social_link ~title ~href ~icon ~text =
+    <a title=(title) href=(href) class_="px-4 py-2 hover:underline font-semibold flex gap-2 text-xl">
+    (icon "h-8 w-8")
+    (text |> string)
+    </a>
+
 let render_posts ~(posts : Data.Post.t list) =
   let post_els = posts |> List.map (fun (post: Data.Post.t) ->
-    <a href=("/posts/" ^ post.slug)><h2 class_="text-lg font-bold hover:underline">(post.title |> string)</h2></a>
+    <div class_="group">
+        <a class_="flex flex-col md:flex-row gap-8" href=(post.url)>
+            <img class_="w-full md:h-48 md:w-auto" src=("/" ^ post.image_src)/>
+            <div>
+                <h2 class_="text-4xl font-bold underline group-hover:no-underline">
+                (post.title |> string)</h2>
+                <p class_="my-4 text-xl">(post.summary |> string)</p>
+            </div>
+        </a>
+    </div>
   )
   in
   <div class_="container mx-auto px-12 py-12">
-    <h1 class_="text-3xl mb-8 font-bold">"Parsing Life - a Blog about Programming and OCaml"</h1>
-    <div class_="flex flex-col gap-6">
+    <div class_="my-6 flex flex-wrap text-center gap-4">
+      (social_link ~title:"@sabine on GitHub" ~href:"https://github.com/sabine" ~icon:Social_icons.github ~text:"sabine")
+      (social_link ~title:"@sabine.sh on Bluesky" ~href:"https://bsky.app/profile/sabine.sh" ~icon:Social_icons.bluesky ~text:"@sabine.sh")
+      (social_link ~title:"@sabine_sh on Twitch" ~href:"https://twitch.tv/sabine_sh" ~icon:Social_icons.twitch ~text:"sabine_sh")
+      (social_link ~title:"@sabine_s_ on X" ~href:"https://x.com/sabine_s_" ~icon:Social_icons.twitter ~text:"sabine_s_")
+    </div>
+    <h1 class_="font-display text-5xl my-12 font-bold">"Parsing Life"</h1>
+    <div class_="font-extralight text-3xl mb-16">
+        "a blog about programming and OCaml and such"
+    </div>
+    <div class_="flex flex-col gap-6 my-20">
     (post_els |> list)
     </div>
   </div>
@@ -15,7 +39,6 @@ let render_posts ~(posts : Data.Post.t list) =
 let make ~(posts : Data.Post.t list) () =
   <Layout title=("Parsing Life")>
     ([
-     Layout.top_navigation;
      render_posts ~posts;
     ])
   </Layout>

@@ -1,32 +1,46 @@
-const defaultTheme = require("tailwindcss/defaultTheme")
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ["**/*.mlx", "**/*.html"],
-  darkMode: 'class',
-  theme: {
-    screens: {
-      'sm': '40em',
-      'md': '48em',
-      'lg': '64em',
-      'xl': '80em',
+    content: ["**/*.mlx", "**/*.html"],
+    darkMode: "class",
+    theme: {
+        screens: {
+            sm: "40em",
+            md: "48em",
+            lg: "64em",
+            xl: "80em",
+        },
+        extend: {
+            colors: {
+                text: "#eee",
+                background: "#222",
+            },
+            typography: (theme) => ({
+                DEFAULT: {
+                    css: {
+                        color: theme("colors.text"),
+                        a: {
+                            color: theme("colors.text"), // Links
+                            "&:hover": {
+                                color: theme("colors.text"), // Hovered links
+                            },
+                        },
+                        h1: { color: theme("colors.text") },
+                        h2: { color: theme("colors.text") },
+                        h3: { color: theme("colors.text") },
+                        strong: { color: theme("colors.text") },
+                    },
+                },
+            }),
+            fontFamily: {
+                sans: ["Roboto", ...defaultTheme.fontFamily.sans],
+                display: ["Sixtyfour", ...defaultTheme.fontFamily.serif],
+            },
+        },
     },
-    extend: {
-      colors: {
-        primary_light: "#d43f00",
-        primary_dark: "#c04e1d",
-        sand: "#faf8f3",
-        dark_blue: "#0e1f43",
-      },
-      typography: (theme) => ({ }),
-      fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
-        montserrat: ["Montserrat", ...defaultTheme.fontFamily.sans]
-      },
-    },
-  },
-  plugins: [
-    require("@tailwindcss/forms"),
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/aspect-ratio"),
-  ],
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),
+        require("@tailwindcss/aspect-ratio"),
+    ],
 };

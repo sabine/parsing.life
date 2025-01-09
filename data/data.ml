@@ -4,6 +4,7 @@ module Post = struct
     title : string;
     date_published : string;
     image_src : string;
+    summary : string;
     content : string;
   }
   [@@deriving of_yaml]
@@ -12,18 +13,22 @@ module Post = struct
 
   type t = {
     slug : string;
+    url : string;
     title : string;
     date_published : string;
     image_src : string;
+    summary : string;
     html_content : string;
   }
 
   let of_metadata (m : metadata) : t =
     {
       slug = m.slug;
+      url = "/posts/" ^ m.slug;
       title = m.title;
       date_published = m.date_published;
       image_src = m.image_src;
+      summary = m.summary;
       html_content =
         Cmarkit_html.of_doc ~safe:false
           (* (Hilite.Md.transform *)

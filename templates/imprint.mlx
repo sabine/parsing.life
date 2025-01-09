@@ -1,0 +1,26 @@
+open JSX
+
+let imprint =
+  {|
+# Imprint
+
+TODO
+      |}
+    |> Cmarkit.Doc.of_string ~strict:true
+    |> Cmarkit_html.of_doc ~safe:false
+
+let make () =
+  <Layout title=("Imprint - Parsing Life")>
+    ([
+      <div class_="mx-auto container px-6 py-20 min-h-screen">
+        Layout.back_button
+        <div class_="prose prose-xl mt-6">
+        <p>
+          "Email: "
+          (Layout.email_link ~id:"imprint_email" ~user:"sabine" "parsing.life")
+        </p>
+        (imprint |> unsafe)
+        </div>
+      </div>
+    ])
+  </Layout>

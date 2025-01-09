@@ -1,23 +1,26 @@
 open JSX
 
-let navigation_link ~href ~title =
-  <a class_="px-6 py-3 h-full items-center hover:text-primary_dark" href=(href)>(string title)</a>
+let back_button =
+    let left_arrow class_=
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=("1.5") stroke="currentColor" class_=(class_)>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+    in
+    <a href="javascript:window.history.back()" class_="py-2 flex gap-2 hover:underline">
+    (left_arrow "h-6")
+    "back"
+    </a>
 
-let navigation_button ~href ~title =
-  <a class_="inline-flex font-montserrat text-white bg-primary_light px-8 py-4" href=(href)>(string title)</a>
+let navigation_link ~href ~title =
+  <a class_="px-6 py-3 h-full text-white font-bold items-center hover:underline" href=(href)>(string title)</a>
 
 let navigation children =
-  <nav class_="bg-[#1A202C] overflow-hiddne max-w-screen text-white">
+  <nav class_="pt-12 border-t-white overflow-hiddne max-w-screen">
     <div class_="md:container flex flex-col gap-2 items-start mx-auto py-2 lg:py-0 px-6 md:flex-row md:items-center">
       (* <a class_="px-2 pt-3 hidden md:inline" href="/"><img src="/img/fun-ocaml-logo.svg"/></a> *)
       (list children)
     </div>
   </nav>
-
-let top_navigation =
-  navigation [
-      navigation_link ~href:"/" ~title:"Home";
-  ]
 
 let email_link ~id ~user host =
   list [
@@ -35,18 +38,25 @@ let email_link ~id ~user host =
     </script>
   ]
 
-let meta_title = "Parsing Life - a Blog"
-let meta_description = "This is my blog where I write about things OCaml and programming"
-let meta_image = "https://parsing.life/social-media/social-media-image.png?1"
+type metadata = {
+    description: string;
+    image: string;
+    url: string;
+    }
 
-let make ~title ~children () =
+let default_meta =
+    {
+        description = "A blog about programming and OCaml and open source.";
+        image = "https://parsing.life/social_media_image.jpg?1";
+        url = "https://parsing.life";
+    }
+
+let make ?(meta = default_meta) ~title ~children () =
   <html lang="en">
     <head>
       <meta charset="utf-8"/>
       <title>(string title)</title>
       <link rel="stylesheet" href="/css/main.css"/>
-      <link rel="stylesheet" href="font-files/inter.css"/>
-      <link rel="stylesheet" href="font-files/Montserrat.css"/>
 
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
       <link rel="icon" type_="image/png" sizes="32x32" href="/favicon-32x32.png"/>
@@ -57,22 +67,29 @@ let make ~title ~children () =
       <meta name="theme-color" content="#ffffff"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <meta property="og:title" content=(meta_title)/>
-      <meta property="og:description" content=(meta_description)/>
-      <meta property="og:image" content=(meta_image)/>
-      <meta property="og:site_name" content="Parsing Life - a Blog"/>
-      <meta property="og:url" content="https://parsing.life"/>
+      <meta property="og:title" content=(title)/>
+      <meta property="og:description" content=(meta.description)/>
+      <meta property="og:image" content=(meta.image)/>
+      <meta property="og:site_name" content="Parsing Life"/>
+      <meta property="og:url" content=(meta.url)/>
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:title" content=(meta_title)/>
-      <meta name="twitter:description" content=(meta_description)/>
-      <meta name="twitter:image" content=(meta_image)/>
+      <meta name="twitter:title" content=(title)/>
+      <meta name="twitter:description" content=(meta.description)/>
+      <meta name="twitter:image" content=(meta.image)/>
       <meta name="twitter:site" content="@sabine_s_"/>
     </head>
     <body>
-      (list children)
-      (navigation [
-        navigation_link ~href:"/" ~title:"Home";
-        navigation_link ~href:"/privacy" ~title:"Privacy Policy"
-      ])
+        <div class_="min-h-screen flex flex-col">
+            <main class_="flex-grow">
+                (list children)
+            </main>
+            <footer>
+                (navigation [
+                    navigation_link ~href:"/" ~title:"Home";
+                    navigation_link ~href:"/privacy" ~title:"Privacy Policy";
+                    navigation_link ~href:"/imprint" ~title:"Imprint"
+                ])
+            </footer>
+        </div>
     </body>
   </html>

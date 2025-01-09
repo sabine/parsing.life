@@ -9,7 +9,7 @@ homepage: "https://github.com/sabine/blog"
 bug-reports: "https://github.com/sabine/blog/issues"
 depends: [
   "ocaml" {>= "4.14.0"}
-  "dune" {>= "3.9"}
+  "dune" {>= "3.16"}
   "bos"
   "fpath"
   "tailwindcss"

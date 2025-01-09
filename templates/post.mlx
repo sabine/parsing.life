@@ -1,27 +1,17 @@
 open JSX
 
-let left_arrow class_=
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth=("1.5") stroke="currentColor" class_=(class_)>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-    </svg>
-
-let back_button =
-    <a href="javascript:window.history.back()" class_="flex gap-2 hover:underline">
-    (left_arrow "h-6")
-    "back"
-    </a>
-
-let render (s: Data.Post.t) =
-  <Layout title=(s.title ^ " - Parsing Life")>
+let render ~meta (s: Data.Post.t) =
+  <Layout meta=(meta) title=(s.title ^ " - Parsing Life")>
     [
-      Layout.top_navigation;
       <div class_="container mx-auto px-6 py-12">
-        back_button
+        Layout.back_button
 
-        <img src=("/" ^ s.image_src)/>
-        <h1 class_="text-2xl font-semibold">(string s.title)</h1>
+        <img class_="my-6" src=("/" ^ s.image_src)/>
+        <div class_="prose my-12">
+            <h1>(string s.title)</h1>
 
-        <p class_="text-lg">(s.html_content |> unsafe)</p>
+            (s.html_content |> unsafe)
+        </div>
       </div>
     ]
   </Layout>
