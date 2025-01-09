@@ -12,8 +12,12 @@ let render_posts ~(posts : Data.Post.t list) =
         <a class_="flex flex-col md:flex-row gap-8" href=(post.url)>
             <img class_="w-full md:h-48 md:w-auto" src=("/" ^ post.image_src)/>
             <div>
-                <h2 class_="text-4xl font-bold underline group-hover:no-underline">
-                (post.title |> string)</h2>
+                <div class_="flex gap-4 items-end">
+                    <h2 class_="text-4xl font-bold underline group-hover:no-underline">
+                    <span>(post.title |> string)</span>
+                    </h2>
+                    (post.date_published |> string)
+                </div>
                 <p class_="my-4 text-xl">(post.summary |> string)</p>
             </div>
         </a>
@@ -25,7 +29,7 @@ let render_posts ~(posts : Data.Post.t list) =
       (social_link ~title:"@sabine on GitHub" ~href:"https://github.com/sabine" ~icon:Social_icons.github ~text:"sabine")
       (social_link ~title:"@sabine.sh on Bluesky" ~href:"https://bsky.app/profile/sabine.sh" ~icon:Social_icons.bluesky ~text:"@sabine.sh")
       (social_link ~title:"@sabine_sh on Twitch" ~href:"https://twitch.tv/sabine_sh" ~icon:Social_icons.twitch ~text:"sabine_sh")
-      (social_link ~title:"@sabine_s_ on X" ~href:"https://x.com/sabine_s_" ~icon:Social_icons.twitter ~text:"sabine_s_")
+      (social_link ~title:"@sabine_s_ on X" ~href:"https://x.com/sabine_s_" ~icon:Social_icons.x ~text:"sabine_s_")
     </div>
     <h1 class_="font-display text-5xl my-12 font-bold">"Parsing Life"</h1>
     <div class_="font-extralight text-3xl mb-16">

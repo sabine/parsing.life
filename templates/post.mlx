@@ -1,16 +1,19 @@
 open JSX
 
-let render ~meta (s: Data.Post.t) =
-  <Layout meta=(meta) title=(s.title ^ " - Parsing Life")>
+let render ~meta (post: Data.Post.t) =
+  <Layout meta=(meta) title=(post.title ^ " - Parsing Life")>
     [
       <div class_="container mx-auto px-6 py-12">
         Layout.back_button
 
-        <img class_="my-6" src=("/" ^ s.image_src)/>
-        <div class_="prose my-12">
-            <h1>(string s.title)</h1>
+        <img class_="my-6" src=("/" ^ post.image_src)/>
+        <div>
+            (post.date_published |> string)
+        </div>
+        <div class_="prose">
+            <h1>(string post.title)</h1>
 
-            (s.html_content |> unsafe)
+            (post.html_content |> unsafe)
         </div>
       </div>
     ]
